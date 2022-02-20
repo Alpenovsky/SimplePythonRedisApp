@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: simplepythonredisapp
+  namespace: python-redis
+  labels:
+    app: simplepythonredisapp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: simplepythonredisapp
+  template:
+    metadata:
+      labels:
+        app: simplepythonredisapp
+    spec:
+      containers:
+      - name: simplepythonredisapp
+        image: my-python-web:v0.6
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 8080
+        env:
+        - name: REDIS_HOST
+          value: redis-master
+        - name: REDIS_PORT
+          value: "6379"
